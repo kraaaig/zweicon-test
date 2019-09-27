@@ -17,7 +17,7 @@
 
 - #### Create FW rule to enable access to port `5000` on VM instance
 
-      gcloud compute --project=<project> firewall-rules create docker-50001 --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:5000,udp:5000 --source-ranges=0.0.0.0/0 --target-tags=docker-5001
+      gcloud beta compute --project=<project> firewall-rules create docker-50001 --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:5000,udp:5000 --source-ranges=0.0.0.0/0 --target-tags=docker-5001
 
 - #### Install docker on Centos 7 VM Instance
 
@@ -27,6 +27,7 @@
       sudo usermod -aG docker $(whoami)
       sudo systemctl enable docker.service
       sudo systemctl start docker.service
+  _* This docker installation commands can be added as script when VM instance boot_
     
 
 ## Build, tag and push docker image to registry
@@ -48,6 +49,6 @@
       docker pull kraaaig/zweicon-test:1.0.0-alpine
       docker run --rm -it -p 5000:5000/tcp kraaaig/zweicon-test:1.0.0-alpine
 
-## Test service
+## Test service (VM instance GCP)
 
       curl http://34.95.240.233:5000/
